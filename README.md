@@ -5,6 +5,10 @@
 This is a api server for the react not to do list
 The repo for the react not to do list can be found here ...
 
+## How to use
+
+-clone the repo 'git clone ....`-run`cs NOT-TO-DO-API`-run`npm install`-run`npm start`. Note: You need to have nodemon installed globally. If you do not have installed, run `npm install -g nodemon`
+
 ## API's
 
 All the api will follow the follow URL: `{rootUrl}/api/v1`
