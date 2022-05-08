@@ -9,6 +9,24 @@ app.get(`/api/v1/tasks`, (req, res) => {
   });
 });
 
+app.post(`/api/v1/tasks`, (req, res) => {
+  res.json({
+    message: "This will post data",
+  });
+});
+
+app.patch(`/api/v1/tasks`, (req, res) => {
+  res.json({
+    message: "This will patch the data",
+  });
+});
+
+app.delete(`/api/v1/tasks`, (req, res) => {
+  res.json({
+    message: "This will delete the data",
+  });
+});
+
 app.get("/", (req, res) => {
   res.json({
     message: "You have reached the not to api server",
