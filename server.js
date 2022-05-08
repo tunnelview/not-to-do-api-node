@@ -1,5 +1,5 @@
 import express from "express";
-import res from "express/lib/response";
+
 const app = express();
 const PORT = 8000;
 
