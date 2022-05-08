@@ -1,31 +1,12 @@
 import express from "express";
+import res from "express/lib/response";
 const app = express();
 const PORT = 8000;
 
 // Task api endpoints
-app.get(`/api/v1/tasks`, (req, res) => {
-  res.json({
-    message: "This is my api code",
-  });
-});
+import taskRouter from "./src/routers/taskRouter.js";
 
-app.post(`/api/v1/tasks`, (req, res) => {
-  res.json({
-    message: "This will post data",
-  });
-});
-
-app.patch(`/api/v1/tasks`, (req, res) => {
-  res.json({
-    message: "This will patch the data",
-  });
-});
-
-app.delete(`/api/v1/tasks`, (req, res) => {
-  res.json({
-    message: "This will delete the data",
-  });
-});
+app.use("/api/v1/tasks", taskRouter);
 
 app.get("/", (req, res) => {
   res.json({
