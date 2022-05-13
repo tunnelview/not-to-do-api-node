@@ -1,21 +1,80 @@
 import express from "express";
-
 const app = express();
-const PORT = 8000;
 
-// Task api endpoints
-import taskRouter from "./src/routers/taskRouter.js";
+import fs from "fs";
 
-app.use("/api/v1/tasks", taskRouter);
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "You have reached the not to api server",
+// const path = require("path");
+import path from "path";
+const __dirname = path.resolve();
+
+app.get("/register", (req, res) => {
+  console.log(req.query);
+  res.sendFile(__dirname + "/form.html");
+});
+
+const fn = __dirname + "/userList.text";
+
+app.post("/register", (req, res) => {
+  console.log(req.body);
+  // store in db
+
+  const str1 = Object.values(req.body).join("|") + "\n";
+  console.log(str1);
+
+  // use fs to create a file
+
+  fs.appendFile(fn, str1, (error) => {
+    if (error) {
+      console.log(error);
+    }
+
+    console.log("data is added");
+  });
+
+  res.send("Registered Successfully");
+});
+
+app.get("/login", (req, res) => {
+  res.sendFile(__dirname + "/login.html");
+});
+
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  fs.readFile(fn, (error, data) => {
+    error && console.log(error);
+
+    const userList = data.toString().split("\n");
+
+    const found = userList.some((item) => {
+      const userArg = item.split("|");
+      const userEmail = userArg[1];
+      const userPass = userArg[2];
+
+      if (email === userEmail && password === userPass) {
+        return true;
+      }
+    });
+
+    console.log(found);
+    found ? res.send("Login Successfully") : res.send("Login Failed");
   });
 });
 
-app.listen(PORT, (error) => {
-  error && console.log(error);
+app.get("/", (req, res) => {
+  res.send(`<h1>welcome to xyz</h1>
+  <p>
+  <a href="/register">register now </a>
+  <a href="/login">login </a>
+    </p>`);
+});
 
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(8000, (error) => {
+  if (error) {
+    console.log("Error");
+  }
+
+  console.log(`Server is running at http://localhost:8000`);
 });
